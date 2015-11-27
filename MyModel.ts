@@ -2,10 +2,12 @@
 
 module MyModel{
     export interface ITestModel{
-        stringVals: string[];
+        stringVals?: string[];
+        boolVal?: boolean;
     }
     export const test : ITestModel = {
         stringVals:  ['hello', 'world'],
+        boolVal: false,
     };
 
 
@@ -26,12 +28,15 @@ module MyTest{
 
     export const test2: tsr.IStringGenerator<MyModel.ITestModel> = obj => {
         return `
-            <ul>${tsr.repeat(obj.stringVals, sV =>`
-                <li>
-                    ${sV}
-                </li>
-                `)}
+            <ul>                    ${tsr.repeat(obj.stringVals, sV =>`
+                <li>${sV}</li>      `)}
             </ul>
+            <table>
+                <tr>                ${tsr.when(() => obj.boolVal, () => `
+                    <td>iah</td>    `, () => `
+                    <td>yat</td>    `)}
+                </tr>
+            </table>
             `;
     }
 
