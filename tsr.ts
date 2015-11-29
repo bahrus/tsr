@@ -1,5 +1,8 @@
 module tsr{
-
+    type stringFn = () => string;
+    type boolFn = () => boolean;
+    type stringOrStringFn = string | stringFn;
+    type boolOrBoolFn = boolean | boolFn;
     export interface IStringGenerator<TObject>{
         (obj: TObject) : string;
     }
@@ -8,13 +11,34 @@ module tsr{
         return arr.map(fn).join('');
     }
 
-    export function when<T>(fnTest: () => boolean, fnTrue: () => string, fnFalse?: () => string){
-        if(fnTest()){
-            return fnTrue();
-        }else if(fnFalse){
-            return fnFalse();
-        }else{
-            return '';
+    export function when(testExpr: boolOrBoolFn, trueExpr: stringOrStringFn, falseExpr?: stringOrStringFn) : string{
+        let boolTest = false;
+        if(typeof testExpr === 'boolean'){
+            boolTest = testExpr;
+        }else if(typeof testExpr === 'function'){
+            boolTest = testExpr();
         }
+        if(boolTest){
+            if(typeof trueExpr === 'string'){
+                return trueExpr;
+            }else{
+                if(typeof trueExpr === 'function'){
+                    return trueExpr();
+                }
+
+            }
+
+        }else if(falseExpr){
+            if(typeof falseExpr === 'string'){
+                return falseExpr;
+            }else{
+                if(typeof falseExpr === 'function'){
+                    return falseExpr();
+                }
+            }
+        }
+        return '';
     }
+
+
 }

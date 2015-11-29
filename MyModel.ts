@@ -7,7 +7,7 @@ module MyModel{
     }
     export const test : ITestModel = {
         stringVals:  ['hello', 'world'],
-        boolVal: false,
+        boolVal: true,
     };
 
 
@@ -37,8 +37,16 @@ module MyTest{
                     <td>yat</td>    `)}
                 </tr>
             </table>
+            <table>
+                <tr>                ${tsr.when(obj.boolVal, `
+                    <td>foo</td>    `, `
+                    <td>bar</td>    `)}
+                </tr>
+            </table>
+
             `;
     }
+
 
 
 }

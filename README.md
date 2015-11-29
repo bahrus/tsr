@@ -9,3 +9,5 @@ Angular, Angular 2, Polymer, Aurelia.
 ### HTML template binding
 
 We use template string reflection, so that an html document can contain a custom element
+
+If template string contains a tag obj
